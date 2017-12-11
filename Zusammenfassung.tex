@@ -29,6 +29,7 @@ headsep=2mm]{geometry}
 \usepackage{extarrows}
 \usepackage{setspace}
 \usepackage{amssymb}
+\usepackage{float}
 \definecolor{Magenta}{cmyk}{0.1,0.8,0,0.1}
 
 % Header
@@ -484,6 +485,8 @@ Ziel ist die Vorbereitung für eine Verschlüsselung durch Einteilung einer Nach
 \end{itemize}
 
 \subsubsection{CBC – Cipher Block Chaining}
+\includegraphics[width=\columnwidth]{CBC_encryption.pdf}
+\includegraphics[width=\columnwidth]{CBC_decryption.pdf}
 \(r=n, \quad c_0 = IV, \quad c_i = E_k(m_i \oplus c_i), \quad m_i = c_{i-1} \oplus E^{-1}_k (c-i)\), jeweils für $i\geq 1$\begin{itemize}[itemsep=1pt]
 \item Bitfehler in \(c_i \Rightarrow m_i \) ist zufällig und  \(m_{i+1}\) hat den Bitfehler an gleicher Stelle wie \(c_i\), \(m_{i+2}\) und folgende werden dagegen wieder korrekt entschlüsselt.
 \item Verlust von \(c_i \Rightarrow m_i \) ist verloren und  \(m_{i+1}\) ist zufällig (reparaturfähig), \(m_{i+2}\) und folgende werden dagegen wieder korrekt entschlüsselt.
@@ -493,6 +496,8 @@ Ziel ist die Vorbereitung für eine Verschlüsselung durch Einteilung einer Nach
 \end{itemize}
 
 \subsubsection{CFB – Cipher Feedback}
+\includegraphics[width=\columnwidth]{CFB_encryption.pdf}
+\includegraphics[width=\columnwidth]{CFB_decryption.pdf}
 \(1 \leq r \leq n,~c_0 = \textrm{Initialvektor},~c_i = m_i \oplus msb_{r}(E_k(x_{i})),~m_i = c_i \oplus msb_{r}(E_k(x_{i})), \quad x_{i+1} = lsb_{n-r}(x_{i})~||~c_i\)
 \begin{itemize}[itemsep=1pt]
 \item Bitfehler in \(c_i \Rightarrow m_i \) mit Bitfehler an gleichen Stelle wie \(c_i\) und alle folgenden $\lceil\frac{n}{r}\rceil$ Blöcke sind zufällig. 
@@ -503,6 +508,8 @@ Ziel ist die Vorbereitung für eine Verschlüsselung durch Einteilung einer Nach
 \end{itemize}
 
 \subsubsection{OFB – Output Feedback}
+\includegraphics[width=\columnwidth]{OFB_encryption.pdf}
+\includegraphics[width=\columnwidth]{OFB_decryption.pdf}
 \(1 \leq r \leq n, \qquad V_0=\textrm{Initialvektor}, \qquad V_i=E_k(V_{i-1}), \qquad c_0 := V_0, \qquad c_i =msb_r(V_i) \oplus m_i, \qquad m_i =msb_r(V_i) \oplus c_i \) für \(1\leq i \leq n\).
 \begin{itemize}[itemsep=1pt]
 \item Bitfehler in \(c_i \Rightarrow m_i \) mit Bitfehler an der gleichen Stelle wie \(c_i\).
@@ -590,6 +597,5 @@ Oder sie schickt ihm eine schon gültige, aber quadrierte Signatur: $(m^2, \sigm
  2141,  2143,  2153,  2161,  2179,  2203,  2207,  2213,  2221,  2237,  2239,  2243,  2251,  2267,
  2269,  2273,  2281,  2287,  2293,  2297,  2309,  2311,  2333,  2339,  2341,  2347,  2351,  2357,
  2371,  2377,  2381,  2383,  2389,  2393,  2399,  2411,  2417,  2423,  2437,  2441,  2447,  2459,
- 2467,  2473,  2477\newline ~\newline
-\karos{28.5}{6} 
+ 2467,  2473,  2477
 \end{document}
