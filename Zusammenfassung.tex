@@ -209,12 +209,12 @@ $\textrm{Wahrscheinlichkeit} = \dfrac{\textrm{Anz. der günstigen F.}}{\textrm{A
 \subsection{Assymetrische Verfahren}
 \subsubsection{RSA}
 
-\begin{itemize}[itemsep=5pt, leftmargin=0pt] 
+\begin{itemize}[itemsep=2pt, leftmargin=0pt] 
 \item[] \textbf{Schlüssel erzeugen} \begin{enumerate}[itemsep=1pt] 
     \item Wähle $p$, $q$ Primzahlen
     \item Setze $n = p \cdot q$
     \item $\varphi(n) = (p-1)(q-1)$
-    \item $e \cdot d + k \cdot \varphi(n) = 1 = \operatorname {ggT}(e, \varphi(n))$
+    \item $e \cdot d + k \cdot \varphi(n) = 1 = \operatorname {ggT}(e, \varphi(n)) \land \\ 1<e<\varphi(n)$
     \item Berechne $d$ als Inverses von $e$ modulo $\varphi(n)$, also 
           $e \cdot d \equiv 1 \bmod \varphi(n)$
     \item $(n,e)$ Public Key
