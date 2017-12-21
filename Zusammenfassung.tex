@@ -360,10 +360,10 @@ mit einem sehr kleinen $y$.
 \paragraph{Attacke der Signatur} falls Alice die gleiche Zufallszahl $k$ benutzt 
 kann man das $x$ (geheime Schlüssel) ausrechnen:
 \begin{align*}
-	\sigma &\gets (s_{1} - s_{2})^{-1} \bmod (p-1)\\
-    k      &\gets \sigma \cdot (m_{1} - m_{2}) \bmod (p-1)\\
-    \rho   &\gets r^{-1} \bmod (p-1)\\
-    x      &\gets \rho (m_{2} - k \cdot s_{2}) \bmod (p-1)
+	\sigma &= (s_{1} - s_{2})^{-1} \bmod (p-1)\\
+    k      &= \sigma \cdot (m_{1} - m_{2}) \bmod (p-1)\\
+    \rho   &= r^{-1} \bmod (p-1)\\
+    x      &= \rho \cdot (m_{2} - k \cdot s_{2}) \bmod (p-1)
 \end{align*}
 
 \paragraph{Attacke mit \emph{Bleichenbacher}} falls eine Signatur $(m,r,s)$
