@@ -74,10 +74,11 @@ headsep=2mm]{geometry}
 \section{Mathematische Grundlagen}
 
 \[ x^k \bmod p = \left( x \bmod p \right)^{k \bmod \varphi(p)} \bmod p \]
-
+$-83 \bmod 12 = 1 \bmod 12$ \\denn $-83 \div 12 = 6$;R=11 und $12-11=1$
 \subsection{$\varphi$-Funktion}
 Die Eulersche $\varphi$-Funktion gibt die für eine Zahl $n$ mit Primfaktorzerlegung 
 \[n = p_{1}^{k_1} \cdot p_{2}^{k_2} \cdot \ldots \cdot p_{r}^{k_r}\]
+
 ($p_{i}$ sind die Primfaktoren, $k$ deren Anzahl als Potenzschreibweise) an, wie viel ganze Zahlen teilerfremd zu \(n\) sind:
 \[\varphi(n) = n\prod_{p|n}^{r}\left (1 - \frac{1}{p}\right)\thickspace\thickspace\thickspace\thickspace\thickspace\thickspace\thickspace\sum_{d \vert n} \varphi(d) = n  \]
 \[\varphi(p) = p - 1\thickspace\thickspace\thickspace\thickspace\thickspace\thickspace\thickspace\thickspace\thickspace\varphi(p^k) = p^{k-1}(p-1) \]
@@ -123,27 +124,17 @@ mit folgenden Voraussetzungen:
 \item \(M_{i} = \frac{m}{m_{i}}\)
 \item \( N_{i} = M_{i}^{-1} \mod m_i\) hierfür Erweiteter Euklid verwenden. \end{enumerate}
 
+
 \subsection{Erweit. Euklidischer Algorithmus}
 \begin{itemize}
 \item Berechnet den \(\operatorname{ggT}(a,{}b)\), wenn $a,b \in \mathbb{N}$
 \item Berechnet \(a \cdot b + n \cdot k = \operatorname{ggT}(a,{}b)\)
+\item Berechnet \(a^{-1} \mod m\)
 \item Besonders interessant für \(\operatorname{ggT}(a,{}b)=1\), da dann \(a\) und \(b\) teilerfremd sind.
 \end{itemize}
 \[a \cdot b \equiv 1 \mod n\]
 oder in einer anderen Schreibw., die uns dann zum Erweit. Euklidischen Algorithmus führt:
 \[a \cdot b + k \cdot n = 1\]
-Beispiel für $a=13$ und $b=19$;
-\begin{center} 
-\begin{tabular}{ c c c c }
-$r_i$ & $q_i$ & $x_i$ & $y_i$ \\
-\hline
-19 &  & \colorbox{pink}{1} & \colorbox{pink}{0} \\
-13 & 1 & \colorbox{pink}{0} & \colorbox{pink}{1} \\
-6 & 2 & 1 & -1 \\
-\colorbox{yellow}{1} &  & \colorbox{green}{-2} & \colorbox{green}{3}\\
-\end{tabular}
-\end{center}
-$\operatorname{ggT}(13, 19) = \colorbox{yellow}{1}$ \hfill $13^{-1}~mod~19=\colorbox{green}{3}$
 
 \subsection{Primitive Wurzel}
 \(\mathbb{Z}_{n}^{*}\) hat genau dann Primitivwurzeln,  wenn 
@@ -181,7 +172,10 @@ a^{d} &\not\equiv& \pm 1 \bmod n \nonumber\\
 a^{2^{r}d} &\not\equiv& -1 \bmod n \quad \forall r \in [1,s-1]\nonumber
 \end{eqnarray}
 Sonst, also falls mindestens eine dieser Bedingungen nicht erfüllt ist, so ist $a$ kein Zeuge für $n$ zusammengesetzt. 
+
+Falls in der Aufgabenstellung drei Zufallszahlen gegeben sind, sind das die $a$ für das folgende Verfahren.
 \begin{enumerate}[itemsep=1pt] 
+    \item Verwerfe alle Zufallszahlen $a$, die nicht im Intervall $1 < a < n-1$. Vermutlich ist $n$ das $p$ der Aufgabestellung bei elGamal.
     \item Zerlege $n-1$ als $2^{s} \cdot d$ wo $d$ ungerade ist
     \item Rechne $z = a^d \bmod n$
     \item Falls $z \equiv \pm 1 \bmod n$, dann ist $a$ kein Zeuge und $n$
@@ -360,10 +354,10 @@ mit einem sehr kleinen $y$.
 \paragraph{Attacke der Signatur} falls Alice die gleiche Zufallszahl $k$ benutzt 
 kann man das $x$ (geheime Schlüssel) ausrechnen:
 \begin{align*}
-	\sigma &= (s_{1} - s_{2})^{-1} \bmod (p-1)\\
-    k      &= \sigma \cdot (m_{1} - m_{2}) \bmod (p-1)\\
-    \rho   &= r^{-1} \bmod (p-1)\\
-    x      &= \rho \cdot (m_{2} - k \cdot s_{2}) \bmod (p-1)
+	\sigma &\gets (s_{1} - s_{2})^{-1} \bmod (p-1)\\
+    k      &\gets \sigma \cdot (m_{1} - m_{2}) \bmod (p-1)\\
+    \rho   &\gets r^{-1} \bmod (p-1)\\
+    x      &\gets \rho (m_{2} - k \cdot s_{2}) \bmod (p-1)
 \end{align*}
 
 \paragraph{Attacke mit \emph{Bleichenbacher}} falls eine Signatur $(m,r,s)$
@@ -517,7 +511,7 @@ Ziel ist die Vorbereitung für eine Verschlüsselung durch Einteilung einer Nach
 \item Bitfehler in \(c_i \Rightarrow m_i \) mit Bitfehler an der gleichen Stelle wie \(c_i\).
 \item Verlust von \(c_i \Rightarrow m_i \) ist verloren, weitere Blöcke defekt (korrigierbar).
 \item Reparatur: möglich
-\item Angriff: nicht möglich
+\item Angriff: bei gleichem Schlüssel und IV möglich.
 \item Einsatz: Satellitenkommunikation (auf Grund der Fehlertoleranz), Filesysteme/Datenbanken wegen wahlfreiem Zugriff
 \end{itemize}
 
