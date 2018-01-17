@@ -104,7 +104,7 @@ Seien \(a,{}p,{}m \in \mathbb{N}\), gesucht ist \(e=a^{p} \mod m\)
 \item Berechne die Binärdarst. von \(p_{10} = b_2\)
 \item Nun geht man wie folgt vor: Für die erste $1$ die Basis $a$ hinschreiben, für weitere \(1 \rightarrow \; )^2 \cdot a\), für folgende \(0 \rightarrow \; )^2\)
 \end{enumerate}
-Beispiel: $a^{p} \mod m$ ist $a=3, p=19, m=23\). Die Binärdarst. der Zahl $p$ ist \((10011)_{2}\). %Beispiel
+Beispiel: $a^{p} \mod m$ ist $a$=3, $p$=19, $m$=23. Die Binärdarst. der Zahl $p$ ist \((10011)_{2}\). %Beispiel
 \[(((3^2)^2)^2 \cdot 3)^2 \cdot 3 \equiv 6 \mod23\] 
 
 \subsection{Chinesischer Restsatz}
@@ -136,7 +136,13 @@ mit folgenden Voraussetzungen:
 \[a \cdot b \equiv 1 \mod n\]
 oder in einer anderen Schreibw., die uns dann zum Erweit. Euklidischen Algorithmus führt:
 \[a \cdot b + k \cdot n = 1\]
-
+\subsubsection{Zahlenbeispiel}
+$e\cdot85+k\cdot352 = 1$\\
+$352 = 4\cdot85+12		\Leftrightarrow		12 = 352-4\cdot85$\\
+$85 = 7\cdot12+1		\Leftrightarrow 	1 = 85-7\cdot12$\\
+$1 = 1\cdot85-7\cdot12$\\
+$1 = 1\cdot85-7\cdot(352-4\cdot85)$\\
+$1 = -7\cdot352+29\cdot85$
 \subsection{Primitive Wurzel}
 \(\mathbb{Z}_{n}^{*}\) hat genau dann Primitivwurzeln,  wenn 
 \(n = 2,4, p^{k}\) oder \(2 \cdot p^{k}\) mit \(p\) eine Primzahl ist und \(k \geq 1\). Die Anzahl sind dann genau \(\varphi(\varphi(n))\).
@@ -163,30 +169,29 @@ hat man schon eine Primitivwurzel gefunden, dann potenziere sie mit jeder Zahl d
 \]
 
 \subsection{Miller-Rabin}
-Ist $p$ prim? Schreibe $p-1$ als $2^{s}\cdot d$ mit ungeradem $d$.
-Wähle $a$ teilerfremd zu $p$ und kleiner als $p$. 
-\[\operatorname{ggT}(a, p) = 1 \land a<p\]
+Ist $n$ prim? Schreibe $n-1$ als $2^{s}\cdot d$ mit ungeradem $d$.
+Wähle $a$ teilerfremd zu $n$ und kleiner als $n$. 
+\[\operatorname{ggT}(a, n) = 1, \; a<n\]
 Falls beide folgenden Bedingungen erfüllt sind, dann ist $a$ Zeuge,
-dass $p$ keine Primzahl ist:
+dass $n$ keine Primzahl ist:
 \begin{eqnarray}
-a^{d} &\not\equiv& \pm 1 \bmod p \nonumber\\
-a^{2^{r}d} &\not\equiv& -1 \bmod p \quad \forall r \in [1,s-1]\nonumber
+a^{d} &\not\equiv& \pm 1 \bmod n \nonumber\\
+a^{2^{r}d} &\not\equiv& -1 \bmod n \quad \forall r \in [1,s-1]\nonumber
 \end{eqnarray}
-Sonst, also falls mindestens eine dieser Bedingungen nicht erfüllt ist, so ist $a$ kein Zeuge für $p$ zusammengesetzt. 
 \DecMargin{1.4em}
 \begin{algorithm}[H]
- \KwData{Zufallszahlen $a \in [2,p-2]$, auf primalit\"at zu testende Zahl $p$}
- \KwResult{Ob $a$ Zeuge f\"ur oder gegen die primalit\"at von $p$}
+ \KwData{Zufallszahlen $a \in [2,p-2]$, auf Primalit\"at zu testende Zahl $p$}
+ \KwResult{Ob $a$ Zeuge f\"ur oder gegen die Primalit\"at von $p$}
  Zerlege $p-1$ als $2^{s} \cdot d$ wo $d$ ungerade ist\;
  Rechne $z = a^d \bmod p$\;
  \If{$z \equiv \pm 1 \bmod p$}{\Return $a$ kein Zeuge und $p$ wahrscheinlich prim\;}
- \While{$i < s-1$}{
+ \While{Wiederholungen $\leq s-1$}{
   $z = z^2 \bmod p$\;
   \uIf{$z \equiv 1 \bmod p$}{\Return $p$ zusammengesetzt und $a$ Zeuge hierfür\;}
   \If{$z \equiv -1 \bmod p$}{\Return $a$ kein Zeuge und $p$ wahrscheinlich prim\;}
-  $i++$\;
+  $Wiederholungen++$\;
  }
-\Return $a$ ist Zeuge gegen die Primalität von $p$ und $p$ ist sicher keine Primzahl und somit zusammengesetzt\;
+\Return $a$ ist Zeuge gegen die Primalität von $p \Rightarrow p$ keine Primzahl und zusammengesetzt\;
 \end{algorithm}
 
 \subsubsection{Irrtumswahrscheinlichkeit} höchstens $\frac{1}{4^x}$ für $x$ Versuche.
@@ -197,7 +202,7 @@ Die Wahrscheinlichkeit für eine Kollision ist $1-p$, und $1-p \geq \frac{1}{2}$
 k \geq  \frac{1}{2} \left( \sqrt{1 + 8 \cdot \ln 2 \cdot s} + 1 \right) \approx 1,18 \cdot \sqrt{s}  
 \]
 wobei z.B. $s=365$ oder $s=2^n$ und $k$ die Mindestanzahl der nötigen Personen oder Hashwerte. \\
-Wenn man also etwas mehr als $2^{n/2}$ viele Hashwerte bildet, findet die Geburtstagsattacke mit Wahrscheinlichkeit $\geq \frac{1}{2}$ eine Kollision. Um die Geburtstagsattacke zu verhindern, muss man $n$ so groß wählen, dass es unmöglich ist, $2^{n/2}$ Hashwerte zu berechnen und zu speichern.
+Wenn man mehr als $2^{n/2}$ viele Hashwerte bildet, findet die Geburtstagsattacke mit Wahrscheinlichkeit $\geq \frac{1}{2}$ eine Kollision. Um die Geburtstagsattacke zu verhindern, muss man $n$ so groß wählen, dass es unmöglich ist, $2^{n/2}$ Hashwerte zu berechnen und speichern.
 \subsection{Regel von Laplace}
 $\textrm{Wahrscheinlichkeit} = \dfrac{\textrm{Anz. der günstigen F.}}{\textrm{Anz. aller Fälle}}$
 
