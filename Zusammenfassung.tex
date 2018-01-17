@@ -30,6 +30,7 @@ headsep=2mm]{geometry}
 \usepackage{setspace}
 \usepackage{amssymb}
 \usepackage{float}
+\usepackage[]{algorithm2e}
 \definecolor{Magenta}{cmyk}{0.1,0.8,0,0.1}
 
 % Header
@@ -164,7 +165,7 @@ hat man schon eine Primitivwurzel gefunden, dann potenziere sie mit jeder Zahl d
 \subsection{Miller-Rabin}
 Ist $p$ prim? Schreibe $p-1$ als $2^{s}\cdot d$ mit ungeradem $d$.
 Wähle $a$ teilerfremd zu $p$ und kleiner als $p$. 
-\[\operatorname{ggT}(a, p) = 1, \; a<p\]
+\[\operatorname{ggT}(a, p) = 1 \land a<p\]
 Falls beide folgenden Bedingungen erfüllt sind, dann ist $a$ Zeuge,
 dass $p$ keine Primzahl ist:
 \begin{eqnarray}
@@ -172,24 +173,23 @@ a^{d} &\not\equiv& \pm 1 \bmod p \nonumber\\
 a^{2^{r}d} &\not\equiv& -1 \bmod p \quad \forall r \in [1,s-1]\nonumber
 \end{eqnarray}
 Sonst, also falls mindestens eine dieser Bedingungen nicht erfüllt ist, so ist $a$ kein Zeuge für $p$ zusammengesetzt. 
+\DecMargin{1.4em}
+\begin{algorithm}[H]
+ \KwData{Zufallszahlen $a \in [2,p-2]$, auf primalit\"at zu testende Zahl $p$}
+ \KwResult{Ob $a$ Zeuge f\"ur oder gegen die primalit\"at von $p$}
+ Zerlege $p-1$ als $2^{s} \cdot d$ wo $d$ ungerade ist\;
+ Rechne $z = a^d \bmod p$\;
+ \If{$z \equiv \pm 1 \bmod p$}{\Return $a$ kein Zeuge und $p$ wahrscheinlich prim\;}
+ \While{$i < s-1$}{
+  $z = z^2 \bmod p$\;
+  \uIf{$z \equiv 1 \bmod p$}{\Return $p$ zusammengesetzt und $a$ Zeuge hierfür\;}
+  \If{$z \equiv -1 \bmod p$}{\Return $a$ kein Zeuge und $p$ wahrscheinlich prim\;}
+  $i++$\;
+ }
+\Return $a$ ist Zeuge gegen die Primalität von $p$ und $p$ ist sicher keine Primzahl und somit zusammengesetzt\;
+\end{algorithm}
 
-Falls in der Aufgabenstellung drei Zufallszahlen gegeben sind, sind das die $a$ für das folgende Verfahren.
-\begin{enumerate}[itemsep=1pt] 
-    \item Verwerfe alle Zufallszahlen $a$, die nicht im Intervall $1 < a < p-1$.
-    \item Zerlege $p-1$ als $2^{s} \cdot d$ wo $d$ ungerade ist
-    \item Rechne $z = a^d \bmod p$
-    \item Falls $z \equiv \pm 1 \bmod p$, dann ist $a$ kein Zeuge und $p$
-          wahrscheinlich prim, sonst mache weiter
-    \item Tue höchstens $s-1$ mal (also für $r=1$ bis $r=s-1$) folgendes:
-          \begin{enumerate}[itemsep=1pt] 
-              \item $z = z^2 \bmod p$ (quadriere $z$ modulo $p$)
-              \item falls $z \equiv 1 \bmod p$ dann ist $p$ zusammengesetzt und $a$ Zeuge hierfür, dann stoppe hier
-              \item falls $z \equiv -1 \bmod p$ dann ist $a$ kein Zeuge und $p$ wahrscheinlich prim, sonst mache weiter
-          \end{enumerate}
-    \item Falls bis hier gelaufen, ist $a$ Zeuge gegen die Primalität von
-          $p$ und $p$ ist sicher keine Primzahl und somit zusammengesetzt.
-\end{enumerate}
-\textbf{Irrtumswahrscheinlichkeit:} höchstens $\frac{1}{4^x}$ für $x$ Versuche.
+\subsubsection{Irrtumswahrscheinlichkeit} höchstens $\frac{1}{4^x}$ für $x$ Versuche.
 
 \subsection{Geburtstagsparadoxon}
 Die Wahrscheinlichkeit für eine Kollision ist $1-p$, und $1-p \geq \frac{1}{2}$, wenn 
@@ -228,7 +228,7 @@ $\textrm{Wahrscheinlichkeit} = \dfrac{\textrm{Anz. der günstigen F.}}{\textrm{A
 \item $d_q = d \mod (q-1)$
 \item $q_{inv} = q^{-1} \mod p$
 \item 
-\begin{tabular}[t]{p{2.8cm} | p{2.8cm}}
+\begin{tabular}[t]{p{2.7cm} | p{2.7cm}}
 Signieren & Entschlüsseln \\ \hline
 $s_1 = m^{d_p} \mod p$ & $m_1 = c^{d_p} \mod p$ \\[0.2cm]
 $s_2 = m^{d_q} \mod q$ & $m_2 = c^{d_q} \mod q$
@@ -238,7 +238,7 @@ $s_2 = m^{d_q} \mod q$ & $m_2 = c^{d_q} \mod q$
 		falls $s_1 > s_2$: \[h = q_{inv} \cdot (s_1 - s_2) \mod p\] 
 \item falls $m_1 < m_2$: \[h = q_{inv} \cdot (m_1 + p - m_2) \mod p\] 
 		falls $s_1 < s_2$: \[h = q_{inv} \cdot (s_1 + p - s_2) \mod p\]\end{enumerate}
-\item \begin{tabular}[t]{p{2.8cm} | p{2.8cm}}
+\item \begin{tabular}[t]{p{2.7cm} | p{2.7cm}}
 Signieren & Entschlüsseln \\ \hline
 $s = s_2 + (h \cdot q)$ & $m = m_2 + (h \cdot q)$
 \end{tabular}
@@ -361,7 +361,7 @@ kann man das $x$ (geheime Schlüssel) ausrechnen:
 \end{align*}
 
 \paragraph{Attacke mit \emph{Bleichenbacher}} falls eine Signatur $(m,r,s)$
-bekannt ist; $(p,q,y)$ ist der öffentliche Schlüssel.
+bekannt ist; $(p,g,y)$ ist der öffentliche Schlüssel.
 \begin{enumerate}
 \item berechne $m^{-1} \bmod (p-1)$
 \item wähle zufällig eine Nachricht $m'$ (in der Aufgabe schon gegeben?)
