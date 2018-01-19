@@ -556,7 +556,7 @@ Ein MAC-Algorithmus ist eine Funktion $h_k$, mit einem geheimen Schlüssel als P
 \section{Kryptographische Protokolle}
 \subsection{Diffie-Hellman-Schlüsselaustausch}
 Alice und Bob haben einen gemeinsamen öffentlichen Schlüssel $(p,g)$, 
-$p$ Primzahl, $g$ primitive Wurzel von $\mathbb{Z}_{p}$ (wenn $g$ keine primitive Wurzel ist, ist das Verfahren unsicher).
+$p$ Primzahl, $g$ primitive Wurzel von $\mathbb{Z}_{p}$ (wenn $g$ keine primitive Wurzel ist, ist das Verfahren möglich aber unsicher).
 \begin{enumerate}
     \item Alice wählt zufällig $a \in [0,p-2]$, rechnet 
           $c = g^a \bmod p$ und schickt $c$ an Bob
