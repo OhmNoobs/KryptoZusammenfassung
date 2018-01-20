@@ -250,46 +250,14 @@ $s = s_2 + (h \cdot q)$ & $m = m_2 + (h \cdot q)$
 \end{enumerate}
 
 \paragraph{Common-Modulus-Attack}
+Gegeben sei: RSA-Key$_1$: $(n, e_1)$ und RSA-Key$_2$: $(n, e_2)$
 \begin{enumerate}[itemsep=1pt] 
-    \item \begin{tabular}[t]{ccc}
-                     Public Key & Kryptogramm & Nachr.\\
-              \hline
-              $(n, e_{1})$ & $c_{1} = m^{e_{1}} \bmod n$ & $m$ \\
-              $(n, e_{2})$ & $c_{2} = m^{e_{2}} \bmod n$ & $m$ \\
-              \hline
-          \end{tabular}
-    \item berechne mit Euklid $\alpha e_{1} + \beta e_{2} = 1$, wobei entweder $\alpha$
-          oder $\beta$ negativ ist.
-    \item zwei Möglichkeiten, $m$ auszurechnen:
-          \begin{enumerate}
-              \item 
-              $m = \left( c_{1}^{\alpha \bmod \varphi(n)} \cdot 
-                      c_{2}^{\beta \bmod \varphi(n)}
-              \right) \bmod n$
-              \item
-                \begin{enumerate}
-                    \item $\alpha$ negativ, dann berechne das Inverse
-                            $c_{1}^{-1} \bmod n$ und dann
-                            \[
-                            m = 
-                            \left( 
-                                \left( c_{1}^{-1} \right)^{|\alpha|} 
-                                \cdot
-                                c_{2}^{\beta}
-                            \right) \bmod n
-                            \]
-                    \item $\beta$ negativ, dann berechne das Inverse
-                            $c_{2}^{-1} \bmod n$ und dann
-                            \[
-                            m = 
-                            \left( 
-                                c_{1}^{\alpha} 
-                                \cdot
-                                \left( c_{2}^{-1} \right)^{|\beta|} 
-                            \right) \bmod n
-                            \]
-                \end{enumerate}
-          \end{enumerate}
+    \item Rechne $\alpha = ggT(c_1, n) \land \beta = ggT(c_2, n)$
+    \item Falls $\alpha | \beta \neq 1$ kann man sofort den anderen Pimfaktor von $n$ bestimmen und entschlüssen.
+    \item Wenn $\alpha | \beta = 1$ bestimme $s_1$, $s_2$\\ mit $e_1 \cdot s_1 + e_1 \cdot s_2 = 1$ (Erweiterter Euklid)
+    \item Es gilt: $c_1^{s_1} \cdot c_2^{s_2} = (m^{e_1})^{s_1} \cdot (m^{e_2})^{s_2}$
+    \item Beweise das gilt: $m^{e_1 \cdot s_1} \cdot m^{e_2 \cdot s_2} = m^1$ \\(mit E.-Euklid: $e_1 \cdot s_1 + e_1 \cdot s_2 = 1$)
+    \item Somit folgt: $c_1^{s_1} \cdot c_2^{s_2} = m$
 \end{enumerate}
 
 \paragraph{Low-Encryption-Exponent-Attack}
