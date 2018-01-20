@@ -253,11 +253,11 @@ $s = s_2 + (h \cdot q)$ & $m = m_2 + (h \cdot q)$
 Gegeben sei: RSA-Key$_1$: $(n, e_1)$ und RSA-Key$_2$: $(n, e_2)$
 \begin{enumerate}[itemsep=1pt] 
     \item Rechne $\alpha = ggT(c_1, n) \land \beta = ggT(c_2, n)$
-    \item Falls $\alpha | \beta \neq 1$ kann man sofort den anderen Pimfaktor von $n$ bestimmen und entschlüssen.
-    \item Wenn $\alpha | \beta = 1$ bestimme $s_1$, $s_2$\\ mit $e_1 \cdot s_1 + e_1 \cdot s_2 = 1$ (Erweiterter Euklid)
+    \item Falls $\alpha$ oder $\beta \neq 1$ kann man sofort den anderen Pimfaktor von $n$ bestimmen und entschlüsseln.
+    \item Wenn $\alpha$ und $ \beta = 1$ bestimme $s_1$, $s_2$\\ mit $e_1 \cdot s_1 + e_2 \cdot s_2 = 1$ (Erweiterter Euklid)
     \item Es gilt: $c_1^{s_1} \cdot c_2^{s_2} = (m^{e_1})^{s_1} \cdot (m^{e_2})^{s_2}$
-    \item Beweise das gilt: $m^{e_1 \cdot s_1} \cdot m^{e_2 \cdot s_2} = m^1$ \\(mit E.-Euklid: $e_1 \cdot s_1 + e_1 \cdot s_2 = 1$)
-    \item Somit folgt: $c_1^{s_1} \cdot c_2^{s_2} = m$
+    \item Beweise das gilt: $m^{e_1 \cdot s_1} \cdot m^{e_2 \cdot s_2} = m^1$ \\(mit E.-Euklid: $e_1 \cdot s_1 + e_2 \cdot s_2 = 1$)
+    \item Somit folgt: $m = c_1^{s_1} \cdot c_2^{s_2} \mod n$
 \end{enumerate}
 
 \paragraph{Low-Encryption-Exponent-Attack}
