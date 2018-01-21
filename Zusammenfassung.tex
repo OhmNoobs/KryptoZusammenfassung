@@ -74,8 +74,9 @@ headsep=2mm]{geometry}
 \begin{multicols}{4}
 \section{Mathematische Grundlagen}
 
-\[ x^k \bmod p = \left( x \bmod p \right)^{k \bmod \varphi(p)} \bmod p \]
-$-83 \bmod 12 = 1 \bmod 12$ \\denn $-83 \div 12 = 6$;R=11 und $12-11=1$
+$x^k \bmod p = \left( x \bmod p \right)^{k \bmod \varphi(p)} \bmod p$\\
+\textbf{Potenzgesetze:} \\$a^0=1$|$a^1=a$|$a^m \cdot a^n = a^{n+m}$|$a^n \cdot b^n = (ab)^n$\\
+\textbf{Mod mit negativen Zahlen:} \\$-83 \bmod 12 = 1 \bmod 12$ \\denn $83 \div 12 = 6$Rest11 und $12-11=1$
 \subsection{$\varphi$-Funktion}
 Die Eulersche $\varphi$-Funktion gibt die für eine Zahl $n$ mit Primfaktorzerlegung 
 \[n = p_{1}^{k_1} \cdot p_{2}^{k_2} \cdot \ldots \cdot p_{r}^{k_r}\]
@@ -85,15 +86,6 @@ Die Eulersche $\varphi$-Funktion gibt die für eine Zahl $n$ mit Primfaktorzerle
 \[\varphi(p) = p - 1\thickspace\thickspace\thickspace\thickspace\thickspace\thickspace\thickspace\thickspace\thickspace\varphi(p^k) = p^{k-1}(p-1) \]
 Beispiel: 
 $\varphi(72) = \varphi(2^3\cdot3^2)=2^{3-1}\cdot(2-1)\cdot3^{2-1}\cdot(3-1)=2^2\cdot1\cdot3\cdot2=24$
-
-\subsection{XOR-Operation}
-\begin{center}
-\begin{tabular}{c| c c }
-$\oplus$ & 0 & 1 \\ \hline
-0 & 0 & 1\\ 
-1 & 1 & 0 
-\end{tabular}
-\end{center}
 
 \subsection{Diskrete Logarithmus}
 Der diskrete Logarithmus ist die kleinste Lösung $x$ der Gleichung $a^x \equiv m \mod p$ mit $m, \;a \in \mathbb{N}$, $p \in \mathbb{Z}_p$. Da sich die diskrete Exponentiation leicht berechnen lässt, während für die Umkehrfunktion, den diskreten Logarithmus, meist nur Algorithmen mit polynomialer Laufzeit bekannt sind, wird der Diskrete Logarithmus u. a. im Diffie–Hellman-Key-Exchange, ElGamal-Encryption, Digital Signature Algorithm eingesetzt.
@@ -126,16 +118,13 @@ mit folgenden Voraussetzungen:
 \item \( N_{i} = M_{i}^{-1} \mod m_i\) hierfür Erweiteter Euklid verwenden. \end{enumerate}
 
 
-\subsection{Erweit. Euklidischer Algorithmus}
-\begin{itemize}
-\item Berechnet den \(\operatorname{ggT}(a,{}b)\), wenn $a,b \in \mathbb{N}$
-\item Berechnet \(a \cdot b + n \cdot k = \operatorname{ggT}(a,{}b)\)
-\item Berechnet \(a^{-1} \mod m\)
-\item Besonders interessant für \(\operatorname{ggT}(a,{}b)=1\), da dann \(a\) und \(b\) teilerfremd sind.
-\end{itemize}
-\[a \cdot b \equiv 1 \mod n\]
-oder in einer anderen Schreibw., die uns dann zum Erweit. Euklidischen Algorithmus führt:
-\[a \cdot b + k \cdot n = 1\]
+\subsection{(Erweiterter) Euklidischer Algorithmus}
+
+Berechnet den \(\operatorname{ggT}(a,{}b)\), wenn $a,b \in \mathbb{N}$
+, Berechnet \(a \cdot b + n \cdot k = \operatorname{ggT}(a,{}b)\)
+, Berechnet \(a^{-1} \mod m\), Besonders interessant für \(\operatorname{ggT}(a,{}b)=1\), da dann \(a\) und \(b\) teilerfremd sind. $a \cdot b \equiv 1 \mod n$ oder in einer anderen Schreibw., die uns dann zum Erweit. Euklidischen Algorithmus führt: \\
+$a \cdot b + k \cdot n = 1$ \\
+\textbf{Prüfen} ob das ermittelte Inverse Element $x$ in mod $n$ richtig bestimmt wurde:\\  $ x^{-1}\cdot x \mod \varphi(n) \overset{!}{\equiv}1 \mod \varphi(n)$
 \subsubsection{Zahlenbeispiel}
 $e\cdot85+k\cdot352 = 1$\\
 $352 = 4\cdot85+12		\Leftrightarrow		12 = 352-4\cdot85$\\
@@ -185,11 +174,12 @@ a^{2^{r}d} &\not\equiv& -1 \bmod n \quad \forall r \in [1,s-1]\nonumber
  Zerlege $p-1$ als $2^{s} \cdot d$ wo $d$ ungerade ist\;
  Rechne $z = a^d \bmod p$\;
  \If{$z \equiv \pm 1 \bmod p$}{\Return $a$ kein Zeuge und $p$ wahrscheinlich prim\;}
- \While{Wiederholungen $\leq s-1$}{
+ $Runden$ = 0\;
+ \While{Runden $< s-1$}{
   $z = z^2 \bmod p$\;
   \uIf{$z \equiv 1 \bmod p$}{\Return $p$ zusammengesetzt und $a$ Zeuge hierfür\;}
   \If{$z \equiv -1 \bmod p$}{\Return $a$ kein Zeuge und $p$ wahrscheinlich prim\;}
-  $Wiederholungen++$\;
+  $Runden++$\;
  }
 \Return $a$ ist Zeuge gegen die Primalität von $p \Rightarrow p$ keine Primzahl und zusammengesetzt\;
 \end{algorithm}
@@ -253,7 +243,7 @@ $s = s_2 + (h \cdot q)$ & $m = m_2 + (h \cdot q)$
 Gegeben sei: RSA-Key$_1$: $(n, e_1)$ und RSA-Key$_2$: $(n, e_2)$
 \begin{enumerate}[itemsep=1pt] 
     \item Rechne $\alpha = ggT(c_1, n) \land \beta = ggT(c_2, n)$
-    \item Falls $\alpha$ oder $\beta \neq 1$ kann man sofort den anderen Pimfaktor von $n$ bestimmen und entschlüsseln.
+    \item Falls $\alpha$ oder $\beta \neq 1$ kann man sofort den anderen Pimfaktor von $n$ bestimmen. (siehe 2.1.1 RSA Schlüssel erzeugen) und danach entschlüsseln.
     \item Wenn $\alpha$ und $ \beta = 1$ bestimme $s_1$, $s_2$\\ mit $e_1 \cdot s_1 + e_2 \cdot s_2 = 1$ (Erweiterter Euklid)
     \item Es gilt: $c_1^{s_1} \cdot c_2^{s_2} = (m^{e_1})^{s_1} \cdot (m^{e_2})^{s_2}$
     \item Beweise das gilt: $m^{e_1 \cdot s_1} \cdot m^{e_2 \cdot s_2} = m^1$ \\(mit E.-Euklid: $e_1 \cdot s_1 + e_2 \cdot s_2 = 1$)
@@ -567,8 +557,6 @@ Oder sie schickt ihm eine schon gültige, aber quadrierte Signatur: $(m^2, \sigm
  1823,  1831,  1847,  1861,  1867,  1871,  1873,  1877,  1879,  1889,  1901,  1907,  1913,  1931,
  1933,  1949,  1951,  1973,  1979,  1987,  1993,  1997,  1999,  2003,  2011,  2017,  2027,  2029,
  2039,  2053,  2063,  2069,  2081,  2083,  2087,  2089,  2099,  2111,  2113,  2129,  2131,  2137,
- 2141,  2143,  2153,  2161,  2179,  2203,  2207,  2213,  2221,  2237,  2239,  2243,  2251,  2267,
- 2269,  2273,  2281,  2287,  2293,  2297,  2309,  2311,  2333,  2339,  2341,  2347,  2351,  2357,
- 2371,  2377,  2381,  2383,  2389,  2393,  2399,  2411,  2417,  2423,  2437,  2441,  2447,  2459,
- 2467,  2473,  2477
+ 2141,  2143,  2153,  2161,  2179,  2203,  2207
+ Dez. zu Bin.: 1: 1, 2: 10, 3: 11, 4: 100, 5: 101, 6: 110, 7: 111, 8: 1000, 9: 1001, 10: 1010, 11: 1011, 12: 1100, 13: 1101, 14: 1110, 15: 1111, 16: 10000, 17: 10001, 18: 10010, 19: 10011, 20: 10100, 21: 10101, 22: 10110, 23: 10111
 \end{document}
