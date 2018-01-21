@@ -205,9 +205,8 @@ $\textrm{Wahrscheinlichkeit} = \dfrac{\textrm{Anz. der günstigen F.}}{\textrm{A
     \item Wähle $p$, $q$ Primzahlen
     \item Setze $n = p \cdot q$
     \item $\varphi(n) = (p-1)(q-1)$
-    \item $e \cdot d + k \cdot \varphi(n) = 1 = \operatorname {ggT}(e, \varphi(n)) \land \\ 1<e<\varphi(n)$
-    \item Berechne $d$ als Inverses von $e$ modulo $\varphi(n)$, also 
-          $e \cdot d \equiv 1 \bmod \varphi(n)$
+    \item $e \cdot d + k \cdot \varphi(n) = 1 = \operatorname {ggT}(e, \varphi(n)) \land \\ 1<e<\varphi(n)$, daraus folgt: \\
+    $d = e^{-1} \mod \varphi(n) \land e = d^{-1} \mod \varphi(n)$
     \item $(n,e)$ Public Key
     \item $(n,d)$ Private Key
 \end{enumerate}
@@ -235,7 +234,7 @@ $s_2 = m^{d_q} \mod q$ & $m_2 = c^{d_q} \mod q$
 		falls $s_1 < s_2$: \[h = q_{inv} \cdot (s_1 + p - s_2) \mod p\]\end{enumerate}
 \item \begin{tabular}[t]{p{2.7cm} | p{2.7cm}}
 Signieren & Entschlüsseln \\ \hline
-$s = s_2 + (h \cdot q)$ & $m = m_2 + (h \cdot q)$
+$s = s_2 + (h \cdot q) \mod n$ & $m = m_2 + h \cdot q \mod n$
 \end{tabular}
 \end{enumerate}
 
